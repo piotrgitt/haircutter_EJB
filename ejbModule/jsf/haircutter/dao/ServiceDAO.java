@@ -3,43 +3,38 @@ package jsf.haircutter.dao;
 import java.util.List;
 import java.util.Map;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import jsf.haircutter.entities.User;
+import jsf.haircutter.entities.Service;
 
-
-@Stateless
-public class UserDAO {
-	
-	
+public class ServiceDAO {
 	@PersistenceContext
 	protected EntityManager em;
 	
 	
-	public void create(User user) {
-		em.persist(user);
+	public void create(Service service) {
+		em.persist(service);
 	}
 
-	public User merge(User user) {
-		return em.merge(user);
+	public Service merge(Service service) {
+		return em.merge(service);
 	}
 
-	public void remove(User user) {
-		em.remove(em.merge(user));
+	public void remove(Service service) {
+		em.remove(em.merge(service));
 	}
 
-	public User find(Object id) {
-		return em.find(User.class, id);
+	public Service find(Object id) {
+		return em.find(Service.class, id);
 	}
 	
 	
-	public List<User> getFullList() {
-		List<User> list = null;
+	public List<Service> getFullList() {
+		List<Service> list = null;
 
-		Query query = em.createQuery("select u from User u");
+		Query query = em.createQuery("select s from Service s");
 
 		try {
 			list = query.getResultList();
@@ -53,16 +48,16 @@ public class UserDAO {
 	
 	
 	
-	public List<User> getList(Map<String, Object> searchParams) {
-		List<User> list = null;
+	public List<Service> getList(Map<String, Object> searchParams) {
+		List<Service> list = null;
 
 		// 1. Build query string with parameters
-		String select = "select u ";
-		String from = "from User u ";
+		String select = "select s ";
+		String from = "from Service s";
 		String where = "";
-		String orderby = "order by u.name";
+		String orderby = "order by s.name";
 
-		// search for surname
+		// search for name
 		String name = (String) searchParams.get("name");
 		if (name != null) {
 			if (where.isEmpty()) {
@@ -94,5 +89,4 @@ public class UserDAO {
 
 		return list;
 	}
-	
 }

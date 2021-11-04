@@ -3,43 +3,38 @@ package jsf.haircutter.dao;
 import java.util.List;
 import java.util.Map;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import jsf.haircutter.entities.User;
+import jsf.haircutter.entities.Reservation;
 
-
-@Stateless
-public class UserDAO {
-	
-	
+public class ReservationDAO {
 	@PersistenceContext
 	protected EntityManager em;
 	
 	
-	public void create(User user) {
-		em.persist(user);
+	public void create(Reservation reservaton) {
+		em.persist(reservaton);
 	}
 
-	public User merge(User user) {
-		return em.merge(user);
+	public Reservation merge(Reservation reservaton) {
+		return em.merge(reservaton);
 	}
 
-	public void remove(User user) {
-		em.remove(em.merge(user));
+	public void remove(Reservation reservaton) {
+		em.remove(em.merge(reservaton));
 	}
 
-	public User find(Object id) {
-		return em.find(User.class, id);
+	public Reservation find(Object id) {
+		return em.find(Reservation.class, id);
 	}
 	
 	
-	public List<User> getFullList() {
-		List<User> list = null;
+	public List<Reservation> getFullList() {
+		List<Reservation> list = null;
 
-		Query query = em.createQuery("select u from User u");
+		Query query = em.createQuery("select r from Reservation r");
 
 		try {
 			list = query.getResultList();
@@ -53,14 +48,14 @@ public class UserDAO {
 	
 	
 	
-	public List<User> getList(Map<String, Object> searchParams) {
-		List<User> list = null;
+	public List<Reservation> getList(Map<String, Object> searchParams) {
+		List<Reservation> list = null;
 
 		// 1. Build query string with parameters
-		String select = "select u ";
-		String from = "from User u ";
+		String select = "select r ";
+		String from = "from Reservation r ";
 		String where = "";
-		String orderby = "order by u.name";
+		String orderby = "order by r.name";
 
 		// search for surname
 		String name = (String) searchParams.get("name");
@@ -94,5 +89,4 @@ public class UserDAO {
 
 		return list;
 	}
-	
 }
