@@ -78,6 +78,31 @@ public class ReservationDAO {
 		return list;
 	}
 	
+	public List<Reservation> getUserReservationList(User user) {
+		List<Reservation> list = null;
+
+		// 1. Build query string with parameters
+		String select = "select r ";
+		String from = "from Reservation r ";
+		int userID = user.getIdUser();
+		String where = "where id_user like " + userID;
+
+
+		// 2. Create query object
+		Query query = em.createQuery(select + from + where);
+
+
+
+		// 4. Execute query and retrieve list of User reservation objects
+		try {
+			list = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
 	public List<Reservation> getFullList() {
 		List<Reservation> list = null;
 
@@ -91,10 +116,6 @@ public class ReservationDAO {
 
 		return list;
 	}
-	
-	
-	
-	
 	
 	
 }

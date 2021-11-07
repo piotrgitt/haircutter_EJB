@@ -21,7 +21,9 @@ public class Reservation implements Serializable {
 	private int idReservation;
 
 	private Time duration;
-
+	private String reservationDescription;
+	
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date time;
 
@@ -52,6 +54,14 @@ public class Reservation implements Serializable {
 
 	public void setDuration(Time duration) {
 		this.duration = duration;
+	}
+	
+	public String getReservationDescription() {
+		return this.reservationDescription;
+	}
+
+	public void setReservationDescription(String reservationDescription) {
+		this.reservationDescription = reservationDescription;
 	}
 
 	public Date getTime() {

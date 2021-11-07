@@ -10,15 +10,12 @@ import javax.persistence.Query;
 
 import jsf.haircutter.entities.User;
 
-
 @Stateless
 public class UserDAO {
-	
-	
+
 	@PersistenceContext
 	protected EntityManager em;
-	
-	
+
 	public void create(User user) {
 		em.persist(user);
 	}
@@ -34,8 +31,7 @@ public class UserDAO {
 	public User find(Object id) {
 		return em.find(User.class, id);
 	}
-	
-	
+
 	public List<User> getFullList() {
 		List<User> list = null;
 
@@ -49,10 +45,28 @@ public class UserDAO {
 
 		return list;
 	}
+
 	
-	
-	
-	
+	public User getUserFromDatabase(String login) {
+
+		User u = null;
+
+		String select = "select u ";
+		String from = "from User u ";
+		String where = "where u.login like '" + login + "'";
+
+		Query query = em.createQuery(select + from + where);
+
+		// 4. Execute query and retrieve list of Person objects
+		try {
+			u = (User) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return u;
+	}
+
 	public List<User> getList(Map<String, Object> searchParams) {
 		List<User> list = null;
 
@@ -72,18 +86,18 @@ public class UserDAO {
 			}
 			where += "u.name like :name ";
 		}
-		
-		// ... other parameters ... 
+
+		// ... other parameters ...
 
 		// 2. Create query object
 		Query query = em.createQuery(select + from + where + orderby);
 
 		// 3. Set configured parameters
 		if (name != null) {
-			query.setParameter("name", name+"%");
+			query.setParameter("name", name + "%");
 		}
 
-		// ... other parameters ... 
+		// ... other parameters ...
 
 		// 4. Execute query and retrieve list of Person objects
 		try {
@@ -94,5 +108,7 @@ public class UserDAO {
 
 		return list;
 	}
+
+	
 	
 }
